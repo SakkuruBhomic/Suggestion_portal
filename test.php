@@ -1,6 +1,6 @@
 <?php
-include 'db.php';
-echo $mysqli->connect_error
-     ? "DB Error: " . $mysqli->connect_error
-     : "Connection OK!";
+require 'db.php';
+echo $conn->connect_error
+     ? 'DB Error: ' . $conn->connect_error
+     : 'Connection OK!';
 ?>

@@ -10,19 +10,7 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
-// Database connection details
-$db_host = "sql211.infinityfree.com";
-$db_user = "if0_39511631";
-$db_pass = "VTRa58jzFaI";
-$db_name = "if0_39511631_complaints";
-
-// Connect to database
-$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'db.php';
 
 // Handle different steps
 $step = isset($_POST['step']) ? $_POST['step'] : (isset($_GET['step']) ? $_GET['step'] : 'register');

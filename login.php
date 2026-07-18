@@ -13,19 +13,7 @@ if (isset($_GET['refresh_captcha'])) {
     exit;
 }
 
-// Database connection details
-$db_host = "sql211.infinityfree.com";
-$db_user = "if0_39511631";
-$db_pass = "VTRa58jzFaI";
-$db_name = "if0_39511631_complaints";
-
-// Connect to database
-$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'db.php';
 
 // Import PHPMailer classes for forgot password
 use PHPMailer\PHPMailer\PHPMailer;
