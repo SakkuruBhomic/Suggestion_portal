@@ -1,9 +1,23 @@
-
 <?php
-$host = getenv('DB_HOST') ?: '127.0.0.1';
-$user = getenv('DB_USER') ?: 'root';
-$pass = getenv('DB_PASS') ?: '';
-$db   = getenv('DB_NAME') ?: 'suggestion_portal';
+$defaults = [
+    'host' => 'sql211.infinityfree.com',
+    'user' => 'if0_39511631',
+    'pass' => 'VTRa58jzFaI',
+    'db'   => 'if0_39511631_complaints',
+];
+
+$localConfigPath = __DIR__ . '/db.local.php';
+if (file_exists($localConfigPath)) {
+    $localConfig = require $localConfigPath;
+    if (is_array($localConfig)) {
+        $defaults = array_merge($defaults, array_intersect_key($localConfig, $defaults));
+    }
+}
+
+$host = getenv('DB_HOST') ?: $defaults['host'];
+$user = getenv('DB_USER') ?: $defaults['user'];
+$pass = getenv('DB_PASS') ?: $defaults['pass'];
+$db   = getenv('DB_NAME') ?: $defaults['db'];
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 

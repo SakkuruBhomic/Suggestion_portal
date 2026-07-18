@@ -53,7 +53,7 @@ $admin_credentials = [
 
 // Admin login logic
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
+    $email = strtolower(trim($_POST['email']));
     $password = $_POST['password'];
     $captcha = strtoupper(trim($_POST['captcha']));
 
@@ -85,13 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     else {
         // Successful authentication
         $admin_name = $admin_credentials[$email]['name'];
+        $admin_password_hash = password_hash($password, PASSWORD_DEFAULT);
         
         // Create or update admin record in database
-        $stmt = $conn->prepare("INSERT INTO users (name, email, is_admin, is_verified, last_login, created_at) 
-                               VALUES (?, ?, 1, 1, NOW(), NOW()) 
+        $stmt = $conn->prepare("INSERT INTO users (name, email, password, is_admin, is_verified, last_login, created_at) 
+                               VALUES (?, ?, ?, 1, 1, NOW(), NOW()) 
                                ON DUPLICATE KEY UPDATE 
-                               is_admin = 1, is_verified = 1, last_login = NOW(), name = VALUES(name)");
-        $stmt->bind_param("ss", $admin_name, $email);
+                               is_admin = 1, is_verified = 1, last_login = NOW(), name = VALUES(name), password = VALUES(password)");
+        $stmt->bind_param("sss", $admin_name, $email, $admin_password_hash);
         $stmt->execute();
         
         // Get the user ID
